@@ -11,4 +11,4 @@ function generateError (message: string, code: number): never {
     throw {message: message, errorCode: code};
 }
 
-generateError('algo fallo!!!', 777);
+generateError('algo fallo pero ya en github!!!', 777);

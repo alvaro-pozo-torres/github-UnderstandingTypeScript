@@ -8,4 +8,4 @@ if (typeof userInput === 'string') {
 function generateError(message, code) {
     throw { message: message, errorCode: code };
 }
-generateError('algo fallo!!!', 777);
+generateError('algo fallo pero ya en github!!!', 777);
