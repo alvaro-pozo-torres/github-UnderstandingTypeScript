@@ -27,8 +27,5 @@ function combine(
 const combinedAges = combine (30, 36, 'as-number');
 console.log(combinedAges);
 
-const combinedAgesStrings = combine ('30', '36', 'as-sting');
-console.log(combinedAgesStrings);
-
 const combinedNames = combine ('Alvaro', 'Pozo', 'as-string');
 console.log(combinedNames);

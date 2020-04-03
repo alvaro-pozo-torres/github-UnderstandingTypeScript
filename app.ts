@@ -1,14 +1,3 @@
-let userInput: unknown;
-let userName: string;
+const userNameAgain = 'Alvaro';
 
-userInput = 5;
-userInput = 'Max';
-if (typeof userInput === 'string') {
-    userName = userInput;
-}
-
-function generateError (message: string, code: number): never {
-    throw {message: message, errorCode: code};
-}
-
-generateError('algo fallo pero ya en github!!!', 777);
+console.log(userNameAgain);
