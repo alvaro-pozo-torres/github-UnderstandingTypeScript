@@ -1,51 +1,108 @@
-//START. using interface as a custum type
-interface AddFn {
-    (a:number, b:number): number;
+type Admin = {
+    name: string;
+    privileges: string[];
+};
+
+type Employee = {
+    name: string;
+    startDate: Date;
+};
+
+type ElevatedEmployee = Admin & Employee;   // interseccion of object types >> combinacion de ambos types
+
+const e1: ElevatedEmployee = {
+    name: 'Alvaro',
+    privileges: ['access', 'files', 'food'],
+    startDate: new Date()
 }
 
-let add: AddFn;
+type Combinable = string | number;
+type Numeric = number | boolean;
 
-add = (n1:number, n2: number) => {
-    return n1 + n2;
+type Universal = Combinable & Numeric;      // interseccion of Union types >> interseccion de types comunes.
+
+function add(a: Combinable, b: Combinable) {
+    if (typeof a === 'string' || typeof b === 'string') {       // sample of a typeGuard using typeof funtion. 
+        return a.toString() + b.toString();
+    }
+    return a + b;
 }
 
-console.log(add(5, 4));
-//END. using interface as a custum type
+type UnknownEmployee = Employee | Admin;
 
-
-interface Named {
-    readonly name?: string;
-    outputName?: string;        //  el simbolo ? hace que la implementacion del elemento sea opcional en la clase
+function printEmployeeInformation (emp: UnknownEmployee) {
+    console.log('Name: ' + emp.name);
+    if ('privileges' in emp) {                                  // sample of a typeGuard using IN to validate certain property of an object
+        console.log('Privileges: ' + emp.privileges);
+    }
+    if ('startDate' in  emp) {
+        console.log('Start Date: ' + emp.startDate);
+    }
 }
 
-interface Greetable extends Named{
-    greet(phrase: string): void;
+printEmployeeInformation(e1);
+printEmployeeInformation ({name: 'Ce', startDate: new Date()});
+
+class Car {
+    drive() {
+        console.log('Drivin a Car...');
+    }
 }
 
-class Person implements Greetable {
-    name?: string;
-    age = 42;
-
-    constructor(n?:string) {
-        if (n) this.name = n;
+class Truck {
+    drive() {
+        console.log('Drivin a Truck...');
     }
 
-    greet(phrase: string) {
-        if (this.name) {
-            console.log('Hello '+ this.name + '. ' + phrase);
-        } else {
-            console.log('Hello there');
-        }
+    loadCargo(amount: number) {
+        console.log('Loading a cargo of ' + amount);
+    }
+}
+
+type Vehicle = Car | Truck;
+
+const v1 = new Car();
+const v2 = new Truck();
+
+function useVehicle(vehicle: Vehicle) {
+    vehicle.drive();
+    if (vehicle instanceof Truck) {                     // sample of a typeGuard using instanceof with Classes as this exists within JS.
+        vehicle.loadCargo(1000)
+    } else {
+        console.log('no cargo loading possible');
     }
 
 }
-let user1: Greetable;
 
-user1 = new Person ()
-user1.greet('Como va todo?');
-console.log(user1);
+useVehicle(v1);
+useVehicle(v2);
 
-let user2: Greetable;
-user2 = new Person('Bruno');
-user2.greet('Como va todo?');
-console.log(user2);
+interface Bird {
+    kind: 'bird';       //property that describes an object. Patron: discriminated union. 
+    flyingSpeed: number;
+}
+
+interface Horse {
+    kind: 'horse';
+    runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimal(animal: Animal) {
+    let speed;
+    switch (animal.kind) {
+        case 'bird':
+            speed = animal.flyingSpeed;
+            break;
+        case 'horse':
+            speed = animal.runningSpeed;
+    }
+    console.log('Moving at speed: ' + speed);
+}
+
+moveAnimal({kind: 'horse', runningSpeed: 60});
+moveAnimal({kind: 'bird', flyingSpeed: 200});
+
+
+
