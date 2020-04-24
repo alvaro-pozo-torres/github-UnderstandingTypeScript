@@ -21,6 +21,8 @@ type Numeric = number | boolean;
 
 type Universal = Combinable & Numeric;      // interseccion of Union types >> interseccion de types comunes.
 
+function add(a: string, b: string) : string;
+function add(a: number, b: number) : number;
 function add(a: Combinable, b: Combinable) {
     if (typeof a === 'string' || typeof b === 'string') {       // sample of a typeGuard using typeof funtion. 
         return a.toString() + b.toString();
@@ -28,6 +30,20 @@ function add(a: Combinable, b: Combinable) {
     return a + b;
 }
 
+const resultAddingTexts = add('Alvaro',  ' Pozo');
+console.log(resultAddingTexts.split(' '));
+
+const fetchedUserData = {
+    id: 'id01',
+    name: 'nombre01',
+    job: { position: 'Director', description: 'my job for now'}
+}
+
+console.log(fetchedUserData?.job?.position);
+
+
+
+console.log('----------------');
 type UnknownEmployee = Employee | Admin;
 
 function printEmployeeInformation (emp: UnknownEmployee) {
@@ -78,7 +94,7 @@ useVehicle(v1);
 useVehicle(v2);
 
 interface Bird {
-    kind: 'bird';       //property that describes an object. Patron: discriminated union. 
+    kind: 'bird';       //property that describes an object. Patron: discriminated union.  Esto es un "literal type"
     flyingSpeed: number;
 }
 
@@ -104,5 +120,25 @@ function moveAnimal(animal: Animal) {
 moveAnimal({kind: 'horse', runningSpeed: 60});
 moveAnimal({kind: 'bird', flyingSpeed: 200});
 
+const paragraph = document.querySelector('p');
+const paragraph2 = document.getElementById('message-output');
 
+// type casting
+// const userInputElement = <HTMLInputElement>document.getElementById('user-input')!;       OPCION 1
+const userInputElement = document.getElementById('user-input')! as HTMLInputElement;       //OPCION 1
 
+userInputElement.value = 'Hi there';
+
+interface ErrorContainer { // {email: 'not a valid email', username: 'must start with character'}
+    [propiedad: string]: string;
+}
+
+const errorBag: ErrorContainer = {
+    email: ' not a valid email',
+    username: 'must start with uppercase'
+} 
+
+const errorBag2: ErrorContainer = {
+    easdmail: ' not a valid email',
+    userasdname: 'must start with uppercase'
+} 
