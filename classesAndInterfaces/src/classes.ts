@@ -40,8 +40,6 @@ class AccountingDepartment extends Department {
     private lastReport: string;
     private static instance: AccountingDepartment;
 
-
-
     get mostRecentReport() {
         if (this.lastReport) {
             return 'Last report: ' + this.lastReport;
